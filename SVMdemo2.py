@@ -12,6 +12,7 @@ with open("1.txt") as ifile:
         tokens = line.strip().split(' ')
         data.append([float(tk) for tk in tokens[:-1]])
         labels.append(tokens[-1])
+
 x = np.array(data)
 labels = np.array(labels)
 y = np.zeros(labels.shape)
@@ -40,14 +41,10 @@ clf_sigmoid = svm.SVC(kernel='sigmoid').fit(x, y)
 for i, clf in enumerate((clf_linear, clf_poly, clf_rbf, clf_sigmoid)):
     answer = clf.predict(np.c_[xx.ravel(), yy.ravel()])
 
-    # print("clf:", clf)
-    # print("np:", np.mean(answer == y_train))
-    # print("answer:", answer)
-    # print("train:", y_train)
-    print "clf:", clf
-    print "np:", np.mean(answer == y_train)
-    print "answer:", answer
-    print "train:", y_train
+    print("clf:", clf)
+    print("np:", np.mean(answer == y_train))
+    print("answer:", answer)
+    print("train:", y_train, "\n")
 
     plt.subplot(2, 2, i + 1)
     plt.subplots_adjust(wspace=0.4, hspace=0.4)
@@ -58,8 +55,8 @@ for i, clf in enumerate((clf_linear, clf_poly, clf_rbf, clf_sigmoid)):
 
     # Plot also the training points
     plt.scatter(x_train[:, 0], x_train[:, 1], c=y_train, cmap=plt.cm.Paired)
-    plt.xlabel(u'身高')
-    plt.ylabel(u'体重')
+    plt.xlabel(u'Height')
+    plt.ylabel(u'Weight')
     plt.xlim(xx.min(), xx.max())
     plt.ylim(yy.min(), yy.max())
     plt.xticks(())
