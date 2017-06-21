@@ -55,10 +55,11 @@ def process_rgb_average(img_file):
 
 
 def process_rgb_delta(img_file, entropy_last_inner):
-    im = Image.open(img_file)
-    # print("Processing image:",img_file)
-    rgb = im.convert("RGB")
-    r, g, b = [np.asarray(component) for component in rgb.split()]
+    # im = Image.open(img_file)  # <class 'PIL.JpegImagePlugin.JpegImageFile'>
+    # print("Processing image:", img_file)
+    # rgb = im.convert("RGB")  # <class 'PIL.Image.Image'>
+    # r, g, b = [np.asarray(component) for component in rgb.split()] # <PIL.Image.Image image mode=L size=1280x720 at>
+    b, g, r = cv2.split(frame)
     rgb_average = (entropy(r)+entropy(g)+entropy(b))/3
     jitter = abs(rgb_average - entropy_last_inner)
     print("Entropy Jitter:", jitter)
@@ -79,21 +80,28 @@ if __name__ == "__main__":
     # 开始结束帧
     frametostart = 0
     frametostop = totalFrameNumber - 1
-    vc.set(cv2.CAP_PROP_POS_FRAMES, frametostart)
+
     frame_now = frametostart
     unstop = 1
-    entropy_last = 0
+    entropy_now = 0
     while unstop:
-        rval, frame = vc.read()
-        print(type(rval), type(frame))
-        cv2.imwrite('image/' + str(frame_now) + '.jpg', frame)
+        vc.set(cv2.CAP_PROP_POS_FRAMES, frame_now)
+        rval, frame = vc.read()  # frame: numpy.ndarray
+        # 显示视频
+        cv2.imshow("frame", frame)
+        if cv2.waitKey(10) & 0xFF == ord('q'):
+            break
+        # 保存后再处理，效率低
+        # cv2.imwrite('image/' + str(frame_now) + '.jpg', frame)
         # print("Saved:", 'image/'+str(frame_now) + '.jpg')
-        entropy_last = process_rgb_delta('image/'+str(frame_now) + '.jpg', entropy_last)
-        frame_now = frame_now + 1
+        # entropy_last = process_rgb_delta('image/'+str(frame_now) + '.jpg', entropy_last)
+        entropy_now = process_rgb_delta(frame, entropy_now)
+        # 每秒获取一帧
+        frame_now = frame_now + 29
         if frame_now > frametostop:
             unstop = 0
 
     end = time.time()
-    print(end - start)
+    print("time:", end - start)
     vc.release()
     cv2.destroyAllWindows()
