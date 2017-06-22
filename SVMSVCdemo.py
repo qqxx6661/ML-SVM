@@ -24,7 +24,7 @@ print("time:", end - start)
 """
 start = time.time()
 clf_linear = SVC(kernel='linear').fit(X, y)
-print("预测结果为：", clf_linear.predict([[55, 89.09, 116.16], [2, 100, 5000], [152, 95, 500], [1345, 82, 584]]))
+print("预测结果为：", clf_linear.predict([[55, 89.09, 116.16], [2, 100, 5000], [152, 95, 500], [1345, 30, 55584]]))
 end = time.time()
 print("time:", end - start)
 """
@@ -36,6 +36,6 @@ print("time:", end - start)
 """
 start = time.time()
 clf_sigmoid = SVC(kernel='sigmoid').fit(X, y)
-print(clf_sigmoid.predict([[89.09, 116.16], [89, 5000], [95, 500], [90, 55584]]))
+print(clf_sigmoid.predict([[55, 89.09, 116.16], [2, 100, 5000], [152, 95, 500], [1345, 82, 584]]))
 end = time.time()
 print("time:", end - start)
