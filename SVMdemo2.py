@@ -7,16 +7,21 @@ import matplotlib.pyplot as plt
 
 data = []
 labels = []
-with open("1.txt") as ifile:
+with open("ATM.txt") as ifile:
     for line in ifile:
         tokens = line.strip().split(' ')
         data.append([float(tk) for tk in tokens[:-1]])
         labels.append(tokens[-1])
 
 x = np.array(data)
+y = np.array(labels)
+"""
+x = np.array(data)
 labels = np.array(labels)
 y = np.zeros(labels.shape)
 y[labels == 'fat'] = 1
+"""
+
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.0)
 
 h = .02
