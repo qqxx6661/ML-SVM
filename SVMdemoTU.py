@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 import numpy as np
 # import scipy as sp
-from sklearn import svm
+from sklearn.svm import SVC
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 
 data = []
 labels = []
-with open("ATM/ATM2 - Copy.txt") as ifile:
+with open("ATM/ATM1_20.txt") as ifile:
     for line in ifile:
         tokens = line.strip().split(' ')
         data.append([float(tk) for tk in tokens[1:3]])
@@ -29,8 +29,11 @@ h = .02
 # create a mesh to plot in 创建一个网格来绘制
 x_min, x_max = x_train[:, 0].min() - 0.1, x_train[:, 0].max() + 0.1
 y_min, y_max = x_train[:, 1].min() - 1, x_train[:, 1].max() + 1
-xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
-                     np.arange(y_min, y_max, h))
+print(x_min)
+print(x_max)
+print(y_min)
+print(y_max)
+xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
 
 ''' SVM '''
 # title for the plots
@@ -38,12 +41,13 @@ titles = ['LinearSVC (linear kernel)',
           'SVC with polynomial (degree 3) kernel',
           'SVC with RBF kernel',
           'SVC with Sigmoid kernel']
-clf_linear = svm.SVC(kernel='linear').fit(x, y)
-# clf_linear  = svm.LinearSVC().fit(x, y)
-clf_poly = svm.SVC(kernel='poly', degree=3).fit(x, y)
-clf_rbf = svm.SVC().fit(x, y)
-clf_sigmoid = svm.SVC(kernel='sigmoid').fit(x, y)
+print("开始训练:")
+clf_linear = SVC(kernel='linear').fit(x, y)
+clf_poly = SVC(kernel='poly', degree=3).fit(x, y)
+clf_rbf = SVC().fit(x, y)
+clf_sigmoid = SVC(kernel='sigmoid').fit(x, y)
 
+print("开始作图:")
 for i, clf in enumerate((clf_linear, clf_poly, clf_rbf, clf_sigmoid)):
     answer = clf.predict(np.c_[xx.ravel(), yy.ravel()])
 

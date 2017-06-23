@@ -3,19 +3,20 @@ import numpy as np
 from sklearn.externals import joblib
 import matplotlib.pyplot as plt
 data = []
-with open("ATM/ATM2_test.txt") as file:
+with open("ATM/ATM1_test.txt") as file:
     for line in file:
         tokens = line.strip().split(' ')
         data.append([float(tk) for tk in tokens])
 test_X = np.array(data)
 print("测试输入为：", test_X)
-clf_linear = joblib.load("model/model_ATM1.m")
+clf_linear = joblib.load("model/model_ATM2.m")
 test_X_result = clf_linear.predict(test_X)
-with open("ATM/ATM2_test_result.txt", 'w') as file2:
+with open("ATM/ATM1_test_result.txt", 'w') as file2:
     for line in test_X_result:
         file2.write(line)
         file2.write('\n')
 
+"""
 # 读取成功率和时延作图
 data_plot = []
 y_plot = []
@@ -28,7 +29,7 @@ plot_X = np.array(data_plot)
 plot_y = np.array(y_plot)
 print("画图输入为：", type(plot_X), plot_X)
 print("画图输出为：", type(plot_y), plot_y)
-"""
+
 h = .02  # step size in the mesh
 # create a mesh to plot in
 x_min, x_max = plot_X[:, 0].min() - 1, plot_X[:, 0].max() + 1
