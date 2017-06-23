@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 data = []
 labels = []
-with open("ATM/ATM1_20.txt") as ifile:
+with open("ATM/ATM1_100.txt") as ifile:
     for line in ifile:
         tokens = line.strip().split(' ')
         data.append([float(tk) for tk in tokens[1:3]])
@@ -37,8 +37,8 @@ xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
 
 ''' SVM '''
 # title for the plots
-titles = ['LinearSVC (linear kernel)',
-          'SVC with polynomial (degree 3) kernel',
+titles = ['SVC with linear kernel',
+          'SVC with polynomial kernel',
           'SVC with RBF kernel',
           'SVC with Sigmoid kernel']
 print("开始训练:")
@@ -66,7 +66,7 @@ for i, clf in enumerate((clf_linear, clf_poly, clf_rbf, clf_sigmoid)):
     # Plot also the training points
     plt.scatter(x_train[:, 0], x_train[:, 1], c=y_train, cmap=plt.cm.Paired)
     plt.xlabel(u'Success Rate')
-    plt.ylabel(u'Delay')
+    plt.ylabel(u'Response Delay')
     plt.xlim(xx.min(), xx.max())
     plt.ylim(yy.min(), yy.max())
     plt.xticks(())

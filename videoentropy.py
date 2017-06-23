@@ -97,7 +97,7 @@ if __name__ == "__main__":
         # entropy_last = process_rgb_delta('image/'+str(frame_now) + '.jpg', entropy_last)
         entropy_now = process_rgb_delta(frame, entropy_now)
         # 每秒获取一帧
-        frame_now = frame_now + 1
+        frame_now = frame_now + 29
         if frame_now > frametostop:
             unstop = 0
 

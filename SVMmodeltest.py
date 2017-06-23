@@ -3,15 +3,15 @@ import numpy as np
 from sklearn.externals import joblib
 import matplotlib.pyplot as plt
 data = []
-with open("ATM/ATM1_test.txt") as file:
+with open("ATM/ATM4_test.txt") as file:
     for line in file:
         tokens = line.strip().split(' ')
         data.append([float(tk) for tk in tokens])
 test_X = np.array(data)
 print("测试输入为：", test_X)
-clf_linear = joblib.load("model/model_ATM2.m")
+clf_linear = joblib.load("model/model_linear_ATM123.m")
 test_X_result = clf_linear.predict(test_X)
-with open("ATM/ATM1_test_result.txt", 'w') as file2:
+with open("ATM/result/ATM4_test_result_ATM123_linear.txt", 'w') as file2:
     for line in test_X_result:
         file2.write(line)
         file2.write('\n')
