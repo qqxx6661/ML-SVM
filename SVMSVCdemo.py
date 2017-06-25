@@ -5,7 +5,7 @@ from sklearn.externals import joblib
 import time
 data = []
 labels = []
-with open("ATM/ATM123.txt") as file:
+with open("ATM/ATM12_addwithouttimereal.txt") as file:
     for line in file:
         tokens = line.strip().split(' ')
         data.append([float(tk) for tk in tokens[:-1]])
@@ -22,7 +22,7 @@ print(y)
 
 start = time.time()
 clf_linear = SVC(kernel='linear').fit(X, y)
-joblib.dump(clf_linear, "model/model_linear_ATM123.m")
+joblib.dump(clf_linear, "model/model_linear_ATM12_addwithouttimereal.m")
 # print("预测结果为：", clf_linear.predict([[91	, 93.41, 624.14], [95, 95.66, 546.82]]))
 # print("预测结果为：", clf_linear.predict([[103, 95.15, 39328.5], [112, 88.55, 5000]]))
 # print("预测结果为：", clf_linear.predict([[76, 98.68, 53267.82], [582, 80, 99999]]))
