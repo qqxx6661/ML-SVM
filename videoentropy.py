@@ -68,38 +68,36 @@ def process_rgb_delta(img_file, entropy_last_inner):
 if __name__ == "__main__":
 
     start = time.time()
+    rval = True
+    totalFrameNumber = 0
     # 读入视频文件
     vc = cv2.VideoCapture('video/final.mp4')
     # 判断是否正常打开
     if vc.isOpened():
         totalFrameNumber = vc.get(cv2.CAP_PROP_FRAME_COUNT)
+        # 输出视频总帧数
         print("Total frame number:", totalFrameNumber)
     else:
         rval = False
         print(rval)
-    # 开始结束帧
-    frametostart = 0
-    frametostop = totalFrameNumber - 1
-
-    frame_now = frametostart
-    unstop = 1
+    # 开始，结束帧
+    frame_start = 0
+    frame_stop = totalFrameNumber - 1
+    frame_now = frame_start
     entropy_now = 0
-    while unstop:
+    while rval:
         vc.set(cv2.CAP_PROP_POS_FRAMES, frame_now)
         rval, frame = vc.read()  # frame: numpy.ndarray
-        # 显示视频
+        print(rval)
+        # 显示视频，按Q退出
         cv2.imshow("frame", frame)
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break
-        # 保存后再处理，效率低
-        # cv2.imwrite('image/' + str(frame_now) + '.jpg', frame)
-        # print("Saved:", 'image/'+str(frame_now) + '.jpg')
-        # entropy_last = process_rgb_delta('image/'+str(frame_now) + '.jpg', entropy_last)
         entropy_now = process_rgb_delta(frame, entropy_now)
-        # 每秒获取一帧
+        # 每n秒获取一帧
         frame_now = frame_now + 29
-        if frame_now > frametostop:
-            unstop = 0
+        if frame_now > frame_stop:
+            rval = False
 
     end = time.time()
     print("time:", end - start)

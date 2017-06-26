@@ -96,7 +96,7 @@ def main():
 				if point[1] > 568:
 					stralert = stralert + 'bottom,'
 					break
-			print stralert
+			print(stralert)
 
 			cv2.polylines(frame, [pts], True, (0, 255, 0), 2)
 

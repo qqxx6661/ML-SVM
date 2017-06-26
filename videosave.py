@@ -5,7 +5,7 @@ import cv2
 
 vc = cv2.VideoCapture('video/final.mp4') #读入视频文件
 
-if vc.isOpened(): #判断是否正常打开
+if vc.isOpened():  # 判断是否正常打开
     totalFrameNumber = vc.get(cv2.CAP_PROP_FRAME_COUNT)
     print(totalFrameNumber)
 
