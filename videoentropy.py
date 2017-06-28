@@ -87,7 +87,7 @@ if __name__ == "__main__":
     entropy_now = 0
     while rval:
         vc.set(cv2.CAP_PROP_POS_FRAMES, frame_now)
-        rval, frame = vc.read()  # frame: numpy.ndarray
+        rval, frame = vc.read(q)  # frame: numpy.ndarray
         print(rval)
         # 显示视频，按Q退出
         cv2.imshow("frame", frame)

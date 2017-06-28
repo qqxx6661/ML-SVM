@@ -12,6 +12,7 @@ frame = None
 roiPts = []
 inputMode = False
 
+
 def selectROI(event, x, y, flags, param):
 	# grab the reference to the current frame, list of ROI
 	# points and whether or not it is ROI selection mode
@@ -76,7 +77,7 @@ def main():
 			# apply cam shift to the back projection, convert the
 			# points to a bounding box, and then draw them
 			(r, roiBox) = cv2.CamShift(backProj, roiBox, termination)
-			pts = np.int0(cv2.cv.BoxPoints(r)) # numpy.ndarray
+			pts = np.int0(cv2.boxPoints(r)) # numpy.ndarray
 			#print pts
 			#print pts[0][0]
 			stralert = 'open the cam:'
