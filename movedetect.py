@@ -18,6 +18,9 @@ def entropy(band):  # 计算画面熵
 def process_rgb_delta(cur_frame_inner, entropy_last_inner):  # 计算熵抖动
     b, g, r = cv2.split(cur_frame_inner)
     rgb_average = (entropy(r)+entropy(g)+entropy(b))/3
+    if entropy_last_inner == 0:
+        row.append(0)
+        return rgb_average
     jitter = abs(rgb_average - entropy_last_inner)
     print("画面抖动数值:", jitter)
     row.append(jitter)
