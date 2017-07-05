@@ -59,7 +59,9 @@ def cal_speed(cur_frame_inner, point_x_inner, point_y_inner):
         p2 = (int(bbox[0] + bbox[2]), int(bbox[1] + bbox[3]))
         cv2.rectangle(cur_frame_inner, p1, p2, (0, 0, 255))  # tuple
         if point_x_inner == 0 and point_y_inner == 0:  # 刚标记后第一帧
-            pass
+            # 两个速度为0
+            row.append(0)
+            row.append(0)
         else:
             v_updown = point_y_inner - p1[1]
             v_leftright = p1[0] - point_x_inner
@@ -121,16 +123,35 @@ if __name__ == "__main__":
             # if seconds < 1.0 / fps:
             #    time.sleep(1.0 / fps - seconds)
 
-            # 检测目前是否已进入跟踪，未跟踪只获取三个参数
-            if flag == 0:
-                # 参数0：时间
-                row.append(datetime.datetime.now().strftime("%H%M%S%f"))
-                row.append('0')  # 遇到有物体运动再改为1
-                # 获取参数一：开/关
-                pre_frame = judge_move(cur_frame, pre_frame)
-                # 获取参数二：图像抖动
-                entropy_last = process_rgb_delta(cur_frame, entropy_last)
+            # 参数0：时间
+            # time_now = str(datetime.datetime.now().strftime("%H%M%S%f"))
+            # row.append(time_now[:-4])  # 毫秒只取两位
+            row.append('0')  # 遇到有物体运动再改为1
+            # 获取参数一：开/关
+            pre_frame = judge_move(cur_frame, pre_frame)
+            # 获取参数二：图像抖动
+            entropy_last = process_rgb_delta(cur_frame, entropy_last)
 
+            # 检测目前是否已进入跟踪，未跟踪只获取三个参数
+
+            if flag == 1:
+
+                # 获取参数三：速度
+                point_x, point_y = cal_speed(cur_frame, point_x, point_y)
+                # 写入一行
+                f_csv.writerow(row)
+                row = []
+                if point_x == 9999 and point_y == 9999:
+                    flag = 0
+                    cv2.imshow('monitor', cur_frame)
+                    if cv2.waitKey(10) & 0xFF == 27:
+                        break
+                    continue  # 解决输出空一行问题
+
+            if flag == 0:
+                # 两个速度为0
+                row.append(0)
+                row.append(0)
                 # 写入一行
                 f_csv.writerow(row)
                 row = []
@@ -139,22 +160,6 @@ if __name__ == "__main__":
                     bbox = cv2.selectROI(cur_frame, False)
                     ok = tracker.init(cur_frame, bbox)
                     flag = 1
-
-            if flag == 1:
-
-                row.append(datetime.datetime.now().strftime("%H%M%S%f"))
-                row.append('0')  # 遇到有物体运动再改为1
-                # 获取参数一：开/关
-                pre_frame = judge_move(cur_frame, pre_frame)
-                # 获取参数二：图像抖动
-                entropy_last = process_rgb_delta(cur_frame, entropy_last)
-                # 获取参数三：速度
-                point_x, point_y = cal_speed(cur_frame, point_x, point_y)
-                if point_x == 9999 and point_y == 9999:
-                    flag = 0
-                # 写入一行
-                f_csv.writerow(row)
-                row = []
 
             cv2.imshow('monitor', cur_frame)
             if cv2.waitKey(10) & 0xFF == 27:
