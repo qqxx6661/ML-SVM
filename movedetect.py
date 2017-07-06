@@ -74,6 +74,9 @@ def cal_speed(cur_frame_inner, point_x_inner, point_y_inner):
         return point_x_inner, point_y_inner
     else:
         point_x_inner, point_y_inner = 9999, 9999
+        # 两个速度为0
+        row.append(0)
+        row.append(0)
         return point_x_inner, point_y_inner
 
 if __name__ == "__main__":
@@ -88,7 +91,7 @@ if __name__ == "__main__":
     tracker = cv2.Tracker_create("KCF")  # BOOSTING, KCF, TLD, MEDIANFLOW or GOTURN
 
     # 视频输入：文件或摄像头
-    camera = cv2.VideoCapture("video/sample1.mp4")
+    camera = cv2.VideoCapture("video/sample2_2.mp4")
     if camera is None:
         print('请先连接摄像头或视频')
         exit()
@@ -103,12 +106,12 @@ if __name__ == "__main__":
     '''
 
     # 打开csv文件逐行写入
-    headers = ['time', 'status', 'jitter', 'v_leftright', 'v_updown']
+    # headers = ['time', 'status', 'jitter', 'v_leftright', 'v_updown']
     row = []
     file_name = str(datetime.datetime.now().strftime("%Y-%m-%d %H-%M-%S"))
-    with open('data_' + file_name + '.csv', 'w', newline='') as f:  # newline不多空行
+    with open('train/data_' + file_name + '.csv', 'w', newline='') as f:  # newline不多空行
         f_csv = csv.writer(f)
-        f_csv.writerow(headers)
+        # f_csv.writerow(headers)
 
         # 循环获取参数
         while True:

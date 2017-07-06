@@ -5,12 +5,12 @@ from sklearn.externals import joblib
 import time
 data = []
 labels = []
-with open("data_2017-07-05 14-00-01.csv") as file:
+with open("train/sample2_2.csv") as file:
     for line in file:
         tokens = line.strip().split(',')
-        data.append([float(tk) for tk in tokens[:-1]])
+        data.append([float(tk) for tk in tokens[1:4]])
         # print(data)
-        labels.append(tokens[-1])
+        labels.append(tokens[0])
 
 X = np.array(data)
 y = np.array(labels)
