@@ -5,13 +5,14 @@ from watchdog.events import *
 from watchdog.observers import Observer
 import time
 
+# 检测修改
+
 
 class FileEventHandler(FileSystemEventHandler):
     flag = 0
 
     def __init__(self):
         FileSystemEventHandler.__init__(self)
-
 
     def on_moved(self, event):
         if event.is_directory:
@@ -32,14 +33,15 @@ class FileEventHandler(FileSystemEventHandler):
             print("file deleted:{0}".format(event.src_path))
 
     def on_modified(self, event):
-        if self.flag == 2:
-            test_model()
-            self.flag = 0
         if event.is_directory:
             print("directory modified:{0}".format(event.src_path))
         else:
             print("file modified:{0}".format(event.src_path))
             self.flag += 1
+            print(self.flag)
+            if self.flag == 2:
+                execute_model()
+                self.flag = 0
 
 
 def judge_accuracy(predict_array, real_array):
@@ -52,7 +54,7 @@ def judge_accuracy(predict_array, real_array):
     return correct_rate
 
 
-def test_model():
+def execute_model():
     data = []
     labels = []
     with open("test/sample2_2.csv") as file:
