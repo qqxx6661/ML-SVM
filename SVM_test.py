@@ -38,7 +38,7 @@ class FileEventHandler(FileSystemEventHandler):
         else:
             print("file modified:{0}".format(event.src_path))
             self.flag += 1
-            print(self.flag)
+            # print(self.flag)
             if self.flag == 2:
                 execute_model()
                 self.flag = 0
@@ -60,7 +60,7 @@ def execute_model():
     with open("test/sample2_2.csv") as file:
         for line in file:
             tokens = line.strip().split(',')
-            data.append([float(tk) for tk in tokens[1:4]])
+            data.append([tk for tk in tokens[1:7]])
             labels.append(tokens[0])
     test_X = np.array(data)
     test_Y = np.array(labels)

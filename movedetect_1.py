@@ -53,7 +53,7 @@ def judge_move(cur_frame_inner, pre_frame_inner):
         return pre_frame_inner
 
 
-def cal_speed(cur_frame_inner, point_x_inner, point_y_inner):  # x,y速度，012开否
+def cal_speed(cur_frame_inner, point_x_inner, point_y_inner):  # x,y速度，左,右开否
     ok, bbox = tracker.update(cur_frame_inner)
     if ok:
         p1 = (int(bbox[0]), int(bbox[1]))
@@ -73,14 +73,18 @@ def cal_speed(cur_frame_inner, point_x_inner, point_y_inner):  # x,y速度，012
         point_x_inner = p1[0]
         point_y_inner = p1[1]
 
-        # 0号摄像头（最左边）
+        # 1号摄像头（中间）
+        if p1[0] <= 50:
+            row.append(1)
+            print("左边该开了")
+        else:
+            row.append(0)
         row.append(1)
         if p2[0] >= 590:
             row.append(1)
             print("右边该开了")
         else:
             row.append(0)
-        row.append(0)
 
         return point_x_inner, point_y_inner
     else:
