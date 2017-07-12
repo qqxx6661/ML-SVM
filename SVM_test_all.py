@@ -57,10 +57,10 @@ def judge_accuracy(predict_array, real_array):
 def execute_model():
     data = []
     labels = []
-    with open("test/sample2_2.csv") as file:
+    with open("test/test_new.csv") as file:
         for line in file:
             tokens = line.strip().split(',')
-            data.append([tk for tk in tokens[1:7]])
+            data.append([tk for tk in tokens[1:13]])
             labels.append(tokens[0])
     test_X = np.array(data)
     test_Y = np.array(labels)
@@ -71,17 +71,18 @@ def execute_model():
     # print("正确结果：", test_Y)
     print("linear预测准确率：", judge_accuracy(test_X_result, test_Y))
 
-    clf_linear = joblib.load("model/model_poly.m")
-    test_X_result = clf_linear.predict(test_X)
-    # print("预测结果：", test_X_result)
-    # print("正确结果：", test_Y)
-    print("poly预测准确率：", judge_accuracy(test_X_result, test_Y))
 
     clf_linear = joblib.load("model/model_rbf.m")
     test_X_result = clf_linear.predict(test_X)
     # print("预测结果：", test_X_result)
     # print("正确结果：", test_Y)
     print("rbf预测准确率：", judge_accuracy(test_X_result, test_Y))
+
+    clf_linear = joblib.load("model/model_poly.m")
+    test_X_result = clf_linear.predict(test_X)
+    # print("预测结果：", test_X_result)
+    # print("正确结果：", test_Y)
+    print("poly预测准确率：", judge_accuracy(test_X_result, test_Y))
 
     clf_linear = joblib.load("model/model_sigmoid.m")
     test_X_result = clf_linear.predict(test_X)
@@ -97,11 +98,11 @@ def execute_model():
     '''
 
 if __name__ == "__main__":
+    execute_model()
     observer = Observer()
     event_handler = FileEventHandler()
     observer.schedule(event_handler, "D:/Github/ML-SVM/model", True)
     observer.start()
-
     try:
         while True:
             time.sleep(1)

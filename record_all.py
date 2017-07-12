@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # coding=utf-8
-
+import datetime
 import cv2
 cap0 = cv2.VideoCapture(0)
 cap1 = cv2.VideoCapture(1)
@@ -8,8 +8,9 @@ cap1 = cv2.VideoCapture(1)
 # linux: XVID、X264; windows:DIVX
 # 20.0指定一分钟的帧数
 fourcc = cv2.VideoWriter_fourcc(*'DIVX')
-out0 = cv2.VideoWriter('video/output0.avi', fourcc, 20.0, (640, 480))
-out1 = cv2.VideoWriter('video/output1.avi', fourcc, 20.0, (640, 480))
+file_name = str(datetime.datetime.now().strftime("%Y-%m-%d %H-%M-%S"))
+out0 = cv2.VideoWriter('video/' + file_name + '_0.avi', fourcc, 20.0, (640, 480))
+out1 = cv2.VideoWriter('video/' + file_name + '_1.avi', fourcc, 20.0, (640, 480))
 record_status = 0
 while True:
     # 读取一帧

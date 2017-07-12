@@ -38,8 +38,12 @@ class FileEventHandler(FileSystemEventHandler):
             print("directory modified:{0}".format(event.src_path))
         else:
             print("file modified:{0}".format(event.src_path))
-            self.flag += 1
-            print(self.flag)
+            print(event.src_path[-8:])
+            if event.src_path[-8:] == 'rain.csv':
+                pass
+            else:
+                self.flag += 1
+            print('目前游标：', self.flag)
             if self.flag == 2:
                 time.sleep(5)  # 防止读取错误
                 add_train(event.src_path)
@@ -65,9 +69,9 @@ def add_train(file_src):
             if tokens[0] == '0' and tokens[7] == '0':
                 labels.append(0)
             if tokens[0] == '1' and tokens[7] == '0':
-                labels.append(2)
-            if tokens[0] == '0' and tokens[7] == '1':
                 labels.append(1)
+            if tokens[0] == '0' and tokens[7] == '1':
+                labels.append(2)
             if tokens[0] == '1' and tokens[7] == '1':
                 labels.append(3)
 
@@ -87,14 +91,14 @@ def add_train(file_src):
 def execute_train():
     data = []
     labels = []
-    test_num = 500
+    test_num = 2000
     with open("train/train.csv") as file:
         for line in file:
             tokens = line.strip().split(',')
             data.append([tk for tk in tokens[1:13]])
             # print(data)
             labels.append(tokens[0])
-    print(len(data[0]))
+    print('输入参数个数：', len(data[0]))
     if len(data) > test_num:  # 控制读取行数
         data = data[-test_num:]
         labels = labels[-test_num:]

@@ -75,35 +75,47 @@ def cal_speed(cur_frame_inner, point_x_inner, point_y_inner, tracker_inner, cam_
 
         # 0号摄像头（最左边）
         if cam_id_inner == 0:
-            row.append(1)
+            row.append(100)
             if p2[0] >= 590:
-                row.append(1)
-                print("右边该开了")
+                if p2[0] > 640:
+                    row.append(50)
+                else:
+                    row.append(p2[0]-590)
+                print("右边该开了", p2[0]-590)
             else:
                 row.append(0)
             row.append(0)
         # 1号摄像头（中间）
         elif cam_id_inner == 1:
             if p1[0] <= 50:
-                row.append(1)
-                print("左边该开了")
+                if p1[0] < 0:
+                    row.append(50)
+                else:
+                    row.append(50-p1[0])
+                print("左边该开了", 50-p1[0])
             else:
                 row.append(0)
-            row.append(1)
+            row.append(100)
             if p2[0] >= 590:
-                row.append(1)
-                print("右边该开了")
+                if p2[0] > 640:
+                    row.append(50)
+                else:
+                    row.append(p2[0]-590)
+                print("右边该开了", p2[0]-590)
             else:
                 row.append(0)
         # 2号摄像头（右边）
         else:
             row.append(0)
             if p1[0] <= 50:
-                row.append(1)
-                print("左边该开了")
+                if p1[0] < 0:
+                    row.append(50)
+                else:
+                    row.append(50-p1[0])
+                print("左边该开了", 50-p1[0])
             else:
                 row.append(0)
-            row.append(1)
+            row.append(100)
 
         return point_x_inner, point_y_inner
     else:
@@ -130,8 +142,8 @@ if __name__ == "__main__":
     tracker1 = cv2.Tracker_create("KCF")  # BOOSTING, KCF, TLD, MEDIANFLOW or GOTURN
 
     # 视频输入：文件或摄像头
-    camera0 = cv2.VideoCapture("video/output1.avi")
-    camera1 = cv2.VideoCapture("video/output0.avi")
+    camera0 = cv2.VideoCapture("video/output0_2017-07-11 10-19-07.avi")
+    camera1 = cv2.VideoCapture("video/output1_2017-07-11 10-19-07.avi")
 
 
     # 打开csv文件逐行写入
@@ -155,7 +167,7 @@ if __name__ == "__main__":
             # 参数0：时间(暂时不加入)
             # time_now = str(datetime.datetime.now().strftime("%H%M%S%f"))
             # row.append(time_now[:-4])  # 毫秒只取两位
-            cam_id = 0
+            cam_id = 2
             row.append('0')  # 遇到有物体运动再改为1
             # 获取参数一：开/关
             pre_frame0 = judge_move(cur_frame0, pre_frame0)
@@ -163,6 +175,13 @@ if __name__ == "__main__":
             entropy_last0 = process_rgb_delta(cur_frame0, entropy_last0)
 
             # 检测目前是否已进入跟踪，未跟踪只获取三个参数
+            if flag0 == 0:
+                # 两个速度为0, 三个左右也写为0
+                row.append(0)
+                row.append(0)
+                row.append(0)
+                row.append(0)
+                row.append(0)
 
             if flag0 == 1:
 
@@ -174,18 +193,10 @@ if __name__ == "__main__":
                 if point_x0 == 9999 and point_y0 == 9999:
                     flag0 = 0
                     # 否则目标消失时没空行
-                    f_csv.writerow(row)
-                    row = []
+                    # f_csv.writerow(row)
+                    # row = []
                     cv2.imshow('frame0', cur_frame0)
-                    continue  # 解决输出空一行问题
-
-            if flag0 == 0:
-                # 两个速度为0, 三个左右也写为0
-                row.append(0)
-                row.append(0)
-                row.append(0)
-                row.append(0)
-                row.append(0)
+                    # continue  # 解决输出空一行问题
 
             cam_id = 1
             row.append('0')  # 遇到有物体运动再改为1
@@ -193,6 +204,14 @@ if __name__ == "__main__":
             pre_frame1 = judge_move(cur_frame1, pre_frame1)
             # 获取参数二：图像抖动
             entropy_last1 = process_rgb_delta(cur_frame1, entropy_last1)
+
+            if flag1 == 0:
+                # 两个速度为0, 两个左右也写为0
+                row.append(0)
+                row.append(0)
+                row.append(0)
+                row.append(0)
+                row.append(0)
 
             if flag1 == 1:
 
@@ -209,13 +228,7 @@ if __name__ == "__main__":
                     cv2.imshow('frame1', cur_frame1)
                     continue  # 解决输出空一行问题
 
-            if flag1 == 0:
-                # 两个速度为0, 两个左右也写为0
-                row.append(0)
-                row.append(0)
-                row.append(0)
-                row.append(0)
-                row.append(0)
+
 
             # 写入一行
             f_csv.writerow(row)
