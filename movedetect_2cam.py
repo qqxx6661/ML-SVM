@@ -120,14 +120,14 @@ if __name__ == "__main__":
     tracker1 = cv2.Tracker_create("KCF")  # BOOSTING, KCF, TLD, MEDIANFLOW or GOTURN
 
     # 视频输入：文件或摄像头
-    camera0 = cv2.VideoCapture("video/output0_2017-07-11 10-19-07.avi")
-    camera1 = cv2.VideoCapture("video/output1_2017-07-11 10-19-07.avi")
+    camera0 = cv2.VideoCapture("video/output0_2017-07-11 09-56-14.avi")
+    camera1 = cv2.VideoCapture("video/output1_2017-07-11 09-56-14.avi")
 
 
     # 打开csv文件逐行写入
     row = []
     file_name = str(datetime.datetime.now().strftime("%Y-%m-%d %H-%M-%S"))
-    with open('train/data_' + file_name + '.csv', 'w', newline='') as f:  # newline不多空行
+    with open('train_2cam/data_' + file_name + '.csv', 'w', newline='') as f:  # newline不多空行
         f_csv = csv.writer(f)
 
         # 循环获取参数

@@ -12,6 +12,7 @@ file_name = str(datetime.datetime.now().strftime("%Y-%m-%d %H-%M-%S"))
 out0 = cv2.VideoWriter('video/' + file_name + '_0.avi', fourcc, 20.0, (640, 480))
 out1 = cv2.VideoWriter('video/' + file_name + '_1.avi', fourcc, 20.0, (640, 480))
 record_status = 0
+record_total = 600
 while True:
     # 读取一帧
     status1, frame1 = cap1.read()
@@ -29,6 +30,11 @@ while True:
         # frame1 = cv2.flip(frame1, 0) # 翻转图像
         out0.write(frame0)
         out1.write(frame1)
+
+        print(record_total)
+        if record_total == 0:
+            break
+        record_total -= 1
 
     # 显示帧
     cv2.imshow('frame0', frame0)
