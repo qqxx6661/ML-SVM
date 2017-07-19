@@ -168,10 +168,10 @@ if __name__ == "__main__":
     tracker3 = cv2.Tracker_create("KCF")
 
     # 视频输入：文件或摄像头
-    camera0 = cv2.VideoCapture("video/2017-07-13 13-38-12_0.avi")
-    camera1 = cv2.VideoCapture("video/2017-07-13 13-38-12_1.avi")
-    camera2 = cv2.VideoCapture("video/2017-07-13 13-39-06_0.avi")
-    camera3 = cv2.VideoCapture("video/2017-07-13 13-39-06_1.avi")
+    camera0 = cv2.VideoCapture("video/2017-07-14 14-39-33_0.avi")
+    camera1 = cv2.VideoCapture("video/2017-07-14 14-39-33_1.avi")
+    camera2 = cv2.VideoCapture("video/2017-07-14 14-38-53_0.avi")
+    camera3 = cv2.VideoCapture("video/2017-07-14 14-38-53_1.avi")
 
 
     # 打开csv文件逐行写入

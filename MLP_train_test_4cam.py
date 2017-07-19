@@ -15,7 +15,7 @@ def judge_accuracy(predict_array, real_array):
 
 data = []
 labels = []
-test_num = 2000
+test_num = 10000
 with open("train_4cam/train.csv") as file:
     for line in file:
         tokens = line.strip().split(',')

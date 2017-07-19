@@ -103,7 +103,7 @@ def add_train(file_src):
 def execute_train():
     data = []
     labels = []
-    test_num = 2000
+    test_num = 10000
     with open("train_4cam/train.csv") as file:
         for line in file:
             tokens = line.strip().split(',')
@@ -137,14 +137,14 @@ def execute_train():
     joblib.dump(clf_rbf, "model_4cam/model_rbf.m")
     end = time.time()
     print("rbf_time:", end - start)
-
+    '''
     print("进行poly训练")
     start = time.time()
     clf_poly = SVC(kernel='poly', degree=3).fit(X, y)
     joblib.dump(clf_poly, "model_4cam/model_poly.m")
     end = time.time()
     print("poly_time:", end - start)
-
+    '''
     print("进行sigmoid训练")
     start = time.time()
     clf_sigmoid = SVC(kernel='sigmoid').fit(X, y)
