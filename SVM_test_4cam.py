@@ -64,9 +64,9 @@ def judge_accuracy(predict_array, real_array):
     for i in range(len(M[0])):
         rowsum, colsum = sum(M[i]), sum(M[r][i] for r in range(n))
         try:
-            print('precision: %s' % (M[i][i] / float(colsum)), 'recall: %s' % (M[i][i] / float(rowsum)))
+            print('分类', i, 'precision: %s' % (M[i][i] / float(colsum)), 'recall: %s' % (M[i][i] / float(rowsum)))
         except ZeroDivisionError:
-            print('precision: %s' % 0, 'recall: %s' % 0)
+            print('分类', i, 'precision: %s' % 0, 'recall: %s' % 0)
 
     for i in range(len(predict_array)):
         if predict_array[i] == real_array[i]:
@@ -79,7 +79,7 @@ def judge_accuracy(predict_array, real_array):
 def execute_model():
     data = []
     labels = []
-    with open("test/test_4cam.csv") as file:
+    with open("test/test_4cam_exp.csv") as file:
         for line in file:
             tokens = line.strip().split(',')
             data.append([tk for tk in tokens[1:28]])

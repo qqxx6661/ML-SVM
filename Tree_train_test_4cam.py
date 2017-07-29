@@ -6,6 +6,28 @@ from sklearn.tree import DecisionTreeClassifier
 
 def judge_accuracy(predict_array, real_array):
     correct = 0
+    M = []
+    count = 0
+    for classes in ['0', '1', '2', '3', '4', '5', '6', '7']:
+        location = [i for i, v in enumerate(real_array) if v == classes]
+        # print(type(location), len(location))
+        M_each = [0, 0, 0, 0, 0, 0, 0, 0]
+        for location_each in location:
+            for classes_1 in ['0', '1', '2', '3', '4', '5', '6', '7']:
+                if predict_array[location_each] == classes_1:
+                    M_each[count] += 1
+                count += 1
+            count = 0
+        M.append(M_each)
+    print(M)
+    n = len(M)
+    for i in range(len(M[0])):
+        rowsum, colsum = sum(M[i]), sum(M[r][i] for r in range(n))
+        try:
+            print('分类', i, 'precision: %s' % (M[i][i] / float(colsum)), 'recall: %s' % (M[i][i] / float(rowsum)))
+        except ZeroDivisionError:
+            print('分类', i, 'precision: %s' % 0, 'recall: %s' % 0)
+
     for i in range(len(predict_array)):
         if predict_array[i] == real_array[i]:
             # print(predict_array[i], real_array[i])
@@ -16,7 +38,7 @@ def judge_accuracy(predict_array, real_array):
 data = []
 labels = []
 test_num = 2000
-with open("train_4cam/train.csv") as file:
+with open("train_4cam/train_mix.csv") as file:
     for line in file:
         tokens = line.strip().split(',')
         data.append([tk for tk in tokens[1:28]])
@@ -44,7 +66,7 @@ print("训练模型:", end - start)
 
 data = []
 labels = []
-with open("test/test_4cam.csv") as file:
+with open("test/test_4cam_exp.csv") as file:
     for line in file:
         tokens = line.strip().split(',')
         data.append([tk for tk in tokens[1:28]])

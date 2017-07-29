@@ -168,10 +168,10 @@ if __name__ == "__main__":
     tracker3 = cv2.Tracker_create("KCF")
 
     # 视频输入：文件或摄像头
-    camera0 = cv2.VideoCapture("video/2017-07-14 14-39-33_0.avi")
-    camera1 = cv2.VideoCapture("video/2017-07-14 14-39-33_1.avi")
-    camera2 = cv2.VideoCapture("video/2017-07-14 14-38-53_0.avi")
-    camera3 = cv2.VideoCapture("video/2017-07-14 14-38-53_1.avi")
+    camera0 = cv2.VideoCapture("video/4cam/4cam_02_01.mp4")
+    camera1 = cv2.VideoCapture("video/4cam/4cam_02_02.mp4")
+    camera2 = cv2.VideoCapture("video/4cam/4cam_02_03.mp4")
+    camera3 = cv2.VideoCapture("video/4cam/4cam_02_04.mp4")
 
 
     # 打开csv文件逐行写入
@@ -202,7 +202,7 @@ if __name__ == "__main__":
             # time_now = str(datetime.datetime.now().strftime("%H%M%S%f"))
             # row.append(time_now[:-4])  # 毫秒只取两位
 
-            cam_id = 3
+            cam_id = 0
             row.append('0')  # 遇到有物体运动再改为1
             # 获取参数一：开/关
             pre_frame0 = judge_move(cur_frame0, pre_frame0)
@@ -234,7 +234,7 @@ if __name__ == "__main__":
                     cv2.imshow('frame0', cur_frame0)
                     # continue  # 解决输出空一行问题
 
-            cam_id = 2
+            cam_id = 1
             row.append('0')  # 遇到有物体运动再改为1
             # 获取参数一：开/关
             pre_frame1 = judge_move(cur_frame1, pre_frame1)
@@ -265,7 +265,7 @@ if __name__ == "__main__":
                     cv2.imshow('frame1', cur_frame1)
                     # continue  # 解决输出空一行问题
 
-            cam_id = 1
+            cam_id = 2
             row.append('0')  # 遇到有物体运动再改为1
             # 获取参数一：开/关
             pre_frame2 = judge_move(cur_frame2, pre_frame2)
@@ -296,7 +296,7 @@ if __name__ == "__main__":
                     cv2.imshow('frame2', cur_frame2)
                     # continue  # 解决输出空一行问题
 
-            cam_id = 0
+            cam_id = 3
             row.append('0')  # 遇到有物体运动再改为1
             # 获取参数一：开/关
             pre_frame3 = judge_move(cur_frame3, pre_frame3)

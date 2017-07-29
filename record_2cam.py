@@ -12,7 +12,7 @@ file_name = str(datetime.datetime.now().strftime("%Y-%m-%d %H-%M-%S"))
 out0 = cv2.VideoWriter('video/' + file_name + '_0.avi', fourcc, 20.0, (640, 480))
 out1 = cv2.VideoWriter('video/' + file_name + '_1.avi', fourcc, 20.0, (640, 480))
 record_status = 0
-record_total = 600
+record_total = 1000
 while True:
     # 读取一帧
     status1, frame1 = cap1.read()

@@ -88,7 +88,7 @@ def add_train(file_src):
                 labels.append(7)
 
     row = []
-    with open('train_4cam/train.csv', 'a', newline='') as f:  # newline不多空行, a是追加模式
+    with open('train_4cam/train_mix.csv', 'a', newline='') as f:  # newline不多空行, a是追加模式
         f_csv = csv.writer(f)
         #print(len(data), len(labels))
         #print(data[0])
@@ -104,7 +104,7 @@ def execute_train():
     data = []
     labels = []
     test_num = 10000
-    with open("train_4cam/train.csv") as file:
+    with open("train_4cam/train_mix.csv") as file:
         for line in file:
             tokens = line.strip().split(',')
             data.append([tk for tk in tokens[1:28]])
@@ -154,6 +154,7 @@ def execute_train():
 
 
 if __name__ == "__main__":
+    execute_train()
     observer = Observer()
     event_handler = FileEventHandler()
     observer.schedule(event_handler, "D:/Github/ML-SVM/train_4cam", True)
