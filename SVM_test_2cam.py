@@ -43,6 +43,28 @@ class FileEventHandler(FileSystemEventHandler):
                 execute_model()
                 self.flag = 0
 
+def judge_accuracy_ave(predict_array, real_array):
+    List_ave = []
+    for i in range(len(predict_array)):
+        if predict_array[i] == real_array[i]:
+            List_ave.append(100)
+            continue
+        if predict_array[i] == 0 and real_array[i] == 3:
+            List_ave.append(0)
+            continue
+        if predict_array[i] == 3 and real_array[i] == 0:
+            List_ave.append(0)
+            continue
+        if predict_array[i] == 2 and real_array[i] == 1:
+            List_ave.append(0)
+            continue
+        if predict_array[i] == 1 and real_array[i] == 2:
+            List_ave.append(0)
+            continue
+        List_ave.append(50)
+    print('测试集长度：', len(List_ave))
+    # print(List_ave)
+    return np.mean(List_ave)
 
 def judge_accuracy(predict_array, real_array):
     correct = 0
@@ -57,7 +79,7 @@ def judge_accuracy(predict_array, real_array):
 def execute_model():
     data = []
     labels = []
-    with open("test/test_2cam.csv") as file:
+    with open("test/test_2cam_02.csv") as file:
         for line in file:
             tokens = line.strip().split(',')
             data.append([tk for tk in tokens[1:11]])
@@ -65,30 +87,32 @@ def execute_model():
     test_X = np.array(data)
     test_Y = np.array(labels)
     # print("测试输入为：", test_X)
-    clf_linear = joblib.load("model/model_linear.m")
+    clf_linear = joblib.load("model_2cam/model_linear.m")
     test_X_result = clf_linear.predict(test_X)
     # print("预测结果：", test_X_result)
     # print("正确结果：", test_Y)
     print("linear预测准确率：", judge_accuracy(test_X_result, test_Y))
+    print("linear预测准确率2：", judge_accuracy_ave(test_X_result, test_Y))
 
-
-    clf_linear = joblib.load("model/model_rbf.m")
+    clf_linear = joblib.load("model_2cam/model_rbf.m")
     test_X_result = clf_linear.predict(test_X)
     # print("预测结果：", test_X_result)
     # print("正确结果：", test_Y)
     print("rbf预测准确率：", judge_accuracy(test_X_result, test_Y))
-
-    clf_linear = joblib.load("model/model_poly.m")
+    print("rbf预测准确率2：", judge_accuracy_ave(test_X_result, test_Y))
+    '''
+    clf_linear = joblib.load("model_2cam/model_poly.m")
     test_X_result = clf_linear.predict(test_X)
     # print("预测结果：", test_X_result)
     # print("正确结果：", test_Y)
     print("poly预测准确率：", judge_accuracy(test_X_result, test_Y))
-
-    clf_linear = joblib.load("model/model_sigmoid.m")
+    '''
+    clf_linear = joblib.load("model_2cam/model_sigmoid.m")
     test_X_result = clf_linear.predict(test_X)
     # print("预测结果：", test_X_result)
     # print("正确结果：", test_Y)
     print("sigmoid预测准确率：", judge_accuracy(test_X_result, test_Y))
+    print("sigmoid预测准确率2：", judge_accuracy_ave(test_X_result, test_Y))
 
     '''
     with open("ATM/result/ATM34_test_result_linear_ATM12_time.txt", 'w') as file2:
@@ -101,7 +125,7 @@ if __name__ == "__main__":
     execute_model()
     observer = Observer()
     event_handler = FileEventHandler()
-    observer.schedule(event_handler, "D:/Github/ML-SVM/model", True)
+    observer.schedule(event_handler, "D:/Github/ML-SVM/model_2cam", True)
     observer.start()
     try:
         while True:

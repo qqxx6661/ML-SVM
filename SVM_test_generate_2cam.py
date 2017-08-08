@@ -40,4 +40,4 @@ def add_train(file_src):
             row = []
 
 if __name__ == "__main__":
-    add_train('D:/Github/ML-SVM/train_2cam/data_2017-07-12 13-31-22.csv')
+    add_train('D:/Github/ML-SVM/train_2cam/data_2017-08-08 10-51-31-test.csv')

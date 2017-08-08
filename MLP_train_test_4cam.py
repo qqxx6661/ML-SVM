@@ -4,6 +4,128 @@ import time
 from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import StandardScaler
 
+def judge_accuracy_ave(predict_array, real_array):
+    List_ave = []
+    for i in range(len(predict_array)):
+        if predict_array[i] == real_array[i]:
+            List_ave.append(100)
+            continue
+        if predict_array[i] == 3 and real_array[i] == 7:
+            List_ave.append(0)
+            continue
+        if predict_array[i] == 7 and real_array[i] == 3:
+            List_ave.append(0)
+            continue
+        if predict_array[i] == 1 and real_array[i] == 7:
+            List_ave.append(25)
+            continue
+        if predict_array[i] == 7 and real_array[i] == 1:
+            List_ave.append(25)
+            continue
+        if predict_array[i] == 2 and real_array[i] == 7:
+            List_ave.append(25)
+            continue
+        if predict_array[i] == 7 and real_array[i] == 2:
+            List_ave.append(25)
+            continue
+        if predict_array[i] == 3 and real_array[i] == 6:
+            List_ave.append(25)
+            continue
+        if predict_array[i] == 6 and real_array[i] == 3:
+            List_ave.append(25)
+            continue
+        if predict_array[i] == 3 and real_array[i] == 4:
+            List_ave.append(25)
+            continue
+        if predict_array[i] == 4 and real_array[i] == 3:
+            List_ave.append(25)
+            continue
+        if predict_array[i] == 1 and real_array[i] == 5:
+            List_ave.append(25)
+            continue
+        if predict_array[i] == 5 and real_array[i] == 1:
+            List_ave.append(25)
+            continue
+        if predict_array[i] == 5 and real_array[i] == 6:
+            List_ave.append(25)
+            continue
+        if predict_array[i] == 6 and real_array[i] == 5:
+            List_ave.append(25)
+            continue
+        if predict_array[i] == 0 and real_array[i] == 3:
+            List_ave.append(50)
+            continue
+        if predict_array[i] == 3 and real_array[i] == 0:
+            List_ave.append(50)
+            continue
+        if predict_array[i] == 1 and real_array[i] == 2:
+            List_ave.append(50)
+            continue
+        if predict_array[i] == 2 and real_array[i] == 1:
+            List_ave.append(50)
+            continue
+        if predict_array[i] == 1 and real_array[i] == 4:
+            List_ave.append(50)
+            continue
+        if predict_array[i] == 4 and real_array[i] == 1:
+            List_ave.append(50)
+            continue
+        if predict_array[i] == 2 and real_array[i] == 4:
+            List_ave.append(50)
+            continue
+        if predict_array[i] == 4 and real_array[i] == 2:
+            List_ave.append(50)
+            continue
+        if predict_array[i] == 0 and real_array[i] == 5:
+            List_ave.append(50)
+            continue
+        if predict_array[i] == 5 and real_array[i] == 0:
+            List_ave.append(50)
+            continue
+        if predict_array[i] == 3 and real_array[i] == 5:
+            List_ave.append(50)
+            continue
+        if predict_array[i] == 5 and real_array[i] == 3:
+            List_ave.append(50)
+            continue
+        if predict_array[i] == 1 and real_array[i] == 6:
+            List_ave.append(50)
+            continue
+        if predict_array[i] == 6 and real_array[i] == 1:
+            List_ave.append(50)
+            continue
+        if predict_array[i] == 2 and real_array[i] == 6:
+            List_ave.append(50)
+            continue
+        if predict_array[i] == 6 and real_array[i] == 2:
+            List_ave.append(50)
+            continue
+        if predict_array[i] == 4 and real_array[i] == 6:
+            List_ave.append(50)
+            continue
+        if predict_array[i] == 6 and real_array[i] == 4:
+            List_ave.append(50)
+            continue
+        if predict_array[i] == 0 and real_array[i] == 7:
+            List_ave.append(50)
+            continue
+        if predict_array[i] == 7 and real_array[i] == 0:
+            List_ave.append(50)
+            continue
+        if predict_array[i] == 5 and real_array[i] == 7:
+            List_ave.append(50)
+            continue
+        if predict_array[i] == 7 and real_array[i] == 5:
+            List_ave.append(50)
+            continue
+        List_ave.append(75)
+    print('测试集长度：',len(List_ave))
+    # print(List_ave)
+    return np.mean(List_ave)
+
+
+
+
 def judge_accuracy(predict_array, real_array):
     correct = 0
     M = []
@@ -37,7 +159,7 @@ def judge_accuracy(predict_array, real_array):
 
 data = []
 labels = []
-test_num = 10000
+test_num = 9000
 with open("train_4cam/train_mix.csv") as file:
     for line in file:
         tokens = line.strip().split(',')
@@ -51,25 +173,19 @@ if len(data) > test_num:  # 控制读取行数
 
 X = np.array(data)
 y = np.array(labels)
-
 print("读取输入样本数为：", len(X))
 # print(X)
 print("读取标记样本数为：", len(y))
 # print(y)
-
-
 sc = StandardScaler()
 sc.fit(X)
 X = sc.transform(X)
-
-
-
 start = time.time()
 # 训练模型，限制树的最大深度4
 mlp = MLPClassifier(hidden_layer_sizes=(13,13,13),max_iter=500)
 mlp.fit(X, y)
-
 end = time.time()
+
 print("训练模型:", end - start)
 data = []
 labels = []
@@ -80,9 +196,8 @@ with open("test/test_4cam_exp.csv") as file:
         labels.append(tokens[0])
 test_X = np.array(data)
 test_Y = np.array(labels)
-
 test_X = sc.transform(test_X)
-
 test_X_result = mlp.predict(test_X)
 print("神经网络预测准确率：", judge_accuracy(test_X_result, test_Y))
+print("神经网络预测准确率2：", judge_accuracy_ave(test_X_result, test_Y))
 # 91.5会变动%

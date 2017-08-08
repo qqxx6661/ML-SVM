@@ -91,8 +91,8 @@ def add_train(file_src):
 def execute_train():
     data = []
     labels = []
-    test_num = 5000
-    with open("train_2cam/train.csv") as file:
+    test_num = 10000
+    with open("train_2cam/train_4505.csv") as file:
         for line in file:
             tokens = line.strip().split(',')
             data.append([tk for tk in tokens[1:13]])
@@ -125,14 +125,14 @@ def execute_train():
     joblib.dump(clf_rbf, "model_2cam/model_rbf.m")
     end = time.time()
     print("rbf_time:", end - start)
-
+    '''
     print("进行poly训练")
     start = time.time()
     clf_poly = SVC(kernel='poly', degree=3).fit(X, y)
     joblib.dump(clf_poly, "model_2cam/model_poly.m")
     end = time.time()
     print("poly_time:", end - start)
-
+    '''
     print("进行sigmoid训练")
     start = time.time()
     clf_sigmoid = SVC(kernel='sigmoid').fit(X, y)
@@ -142,6 +142,7 @@ def execute_train():
 
 
 if __name__ == "__main__":
+    execute_train()
     observer = Observer()
     event_handler = FileEventHandler()
     observer.schedule(event_handler, "D:/Github/ML-SVM/train_2cam", True)

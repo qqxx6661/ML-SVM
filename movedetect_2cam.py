@@ -77,11 +77,15 @@ def cal_speed(cur_frame_inner, point_x_inner, point_y_inner, tracker_inner, cam_
         if cam_id_inner == 0:
             row.append(100)
             if p2[0] >= 590:
-                if p2[0] > 640:
+                if p2[0] > 680:
+                    row.append(0)
+                    print("右边全部出去，填充0")  # 防止一直有框
+                elif p2[0] > 640:
                     row.append(50)
+                    print("右边开始出去了", 50)
                 else:
                     row.append(p2[0]-590)
-                print("右边该开了", p2[0]-590)
+                    print("右边该开了", p2[0]-590)
             else:
                 row.append(0)
         # 2号摄像头（右边）
@@ -120,9 +124,8 @@ if __name__ == "__main__":
     tracker1 = cv2.Tracker_create("KCF")  # BOOSTING, KCF, TLD, MEDIANFLOW or GOTURN
 
     # 视频输入：文件或摄像头
-    camera0 = cv2.VideoCapture("video/output0_2017-07-11 09-56-14.avi")
-    camera1 = cv2.VideoCapture("video/output1_2017-07-11 09-56-14.avi")
-
+    camera0 = cv2.VideoCapture("video_overlap/2cam_scene1/2017-08-07 18-04-27_0.avi")
+    camera1 = cv2.VideoCapture("video_overlap/2cam_scene1/2017-08-07 18-04-27_1.avi")
 
     # 打开csv文件逐行写入
     row = []
@@ -145,7 +148,7 @@ if __name__ == "__main__":
             # 参数0：时间(暂时不加入)
             # time_now = str(datetime.datetime.now().strftime("%H%M%S%f"))
             # row.append(time_now[:-4])  # 毫秒只取两位
-            cam_id = 1
+            cam_id = 0
             row.append('0')  # 遇到有物体运动再改为1
             # 获取参数一：开/关
             pre_frame0 = judge_move(cur_frame0, pre_frame0)
@@ -175,7 +178,7 @@ if __name__ == "__main__":
                     cv2.imshow('frame0', cur_frame0)
                     # continue  # 解决输出空一行问题
 
-            cam_id = 0
+            cam_id = 1
             row.append('0')  # 遇到有物体运动再改为1
             # 获取参数一：开/关
             pre_frame1 = judge_move(cur_frame1, pre_frame1)
