@@ -92,7 +92,7 @@ def execute_train():
     data = []
     labels = []
     test_num = 10000
-    with open("train_2cam/train_4505.csv") as file:
+    with open("train_2cam/train.csv") as file:
         for line in file:
             tokens = line.strip().split(',')
             data.append([tk for tk in tokens[1:13]])
@@ -142,7 +142,7 @@ def execute_train():
 
 
 if __name__ == "__main__":
-    execute_train()
+    # execute_train()
     observer = Observer()
     event_handler = FileEventHandler()
     observer.schedule(event_handler, "D:/Github/ML-SVM/train_2cam", True)
