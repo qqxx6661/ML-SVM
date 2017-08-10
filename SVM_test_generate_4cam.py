@@ -40,7 +40,7 @@ def add_train(file_src):
                 labels.append(7)
 
     row = []
-    with open('test/test_4cam_exp.csv', 'a', newline='') as f:  # newline不多空行, a是追加模式
+    with open('test/test_4cam_scene1(1)_901.csv', 'a', newline='') as f:  # newline不多空行, a是追加模式
         f_csv = csv.writer(f)
         print(len(data), len(labels))
         print(len(data[0]), data[0])
@@ -52,4 +52,4 @@ def add_train(file_src):
             row = []
 
 if __name__ == "__main__":
-    add_train('D:/Github/ML-SVM/train_4cam/data_2017-07-28 11-38-54-test.csv')
+    add_train('D:/Github/ML-SVM/train_4cam/data_2017-08-09 15-59-54-test.csv')

@@ -20,7 +20,7 @@ def show_entropy(band_name, band):
 
 
 def process(img_file):
-    im = Image.open(img_file)
+    im = frame # Image.open(img_file)
     print(img_file, im.format, im.size, im.mode)
     print()
 
@@ -87,13 +87,14 @@ if __name__ == "__main__":
     entropy_now = 0
     while rval:
         vc.set(cv2.CAP_PROP_POS_FRAMES, frame_now)
-        rval, frame = vc.read(q)  # frame: numpy.ndarray
+        rval, frame = vc.read()  # frame: numpy.ndarray
         print(rval)
         # 显示视频，按Q退出
         cv2.imshow("frame", frame)
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break
         entropy_now = process_rgb_delta(frame, entropy_now)
+        process(frame)
         # 每n秒获取一帧
         frame_now = frame_now + 29
         if frame_now > frame_stop:

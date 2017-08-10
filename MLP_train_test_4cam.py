@@ -160,7 +160,7 @@ def judge_accuracy(predict_array, real_array):
 data = []
 labels = []
 test_num = 9000
-with open("train_4cam/train_mix.csv") as file:
+with open("train_4cam/train.csv") as file:
     for line in file:
         tokens = line.strip().split(',')
         data.append([tk for tk in tokens[1:28]])
@@ -189,7 +189,7 @@ end = time.time()
 print("训练模型:", end - start)
 data = []
 labels = []
-with open("test/test_4cam_exp.csv") as file:
+with open("test/test_4cam_scene1(1)_901.csv") as file:
     for line in file:
         tokens = line.strip().split(',')
         data.append([tk for tk in tokens[1:28]])

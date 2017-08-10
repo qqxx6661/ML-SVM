@@ -2,6 +2,7 @@
 # coding=utf-8
 import datetime
 import cv2
+import time
 cap0 = cv2.VideoCapture(0)
 cap1 = cv2.VideoCapture(1)
 # 定义解码器并创建VideoWrite对象
@@ -13,6 +14,7 @@ out0 = cv2.VideoWriter('video_overlap/' + file_name + '_0.avi', fourcc, 30.0, (6
 out1 = cv2.VideoWriter('video_overlap/' + file_name + '_1.avi', fourcc, 30.0, (640, 480))
 record_status = 1
 record_total = 900
+time.sleep(10)
 while True:
     # 读取一帧
     status1, frame1 = cap1.read()

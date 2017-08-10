@@ -96,7 +96,7 @@ end = time.time()
 print("训练模型:", end - start)
 data = []
 labels = []
-with open("test/test_2cam_02.csv") as file:
+with open("test/test_2cam_scene2(1)_901.csv") as file:
     for line in file:
         tokens = line.strip().split(',')
         data.append([tk for tk in tokens[1:28]])

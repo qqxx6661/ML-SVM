@@ -79,7 +79,7 @@ def judge_accuracy(predict_array, real_array):
 def execute_model():
     data = []
     labels = []
-    with open("test/test_2cam_02.csv") as file:
+    with open("test/test_2cam_scene2(1)_901.csv") as file:
         for line in file:
             tokens = line.strip().split(',')
             data.append([tk for tk in tokens[1:11]])

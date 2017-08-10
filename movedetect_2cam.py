@@ -124,8 +124,8 @@ if __name__ == "__main__":
     tracker1 = cv2.Tracker_create("KCF")  # BOOSTING, KCF, TLD, MEDIANFLOW or GOTURN
 
     # 视频输入：文件或摄像头
-    camera0 = cv2.VideoCapture("video_overlap/2cam_scene1/2017-08-07 18-04-27_0.avi")
-    camera1 = cv2.VideoCapture("video_overlap/2cam_scene1/2017-08-07 18-04-27_1.avi")
+    camera0 = cv2.VideoCapture("video_overlap/2cam_scene2/2017-08-07 18-21-34_0.avi")
+    camera1 = cv2.VideoCapture("video_overlap/2cam_scene2/2017-08-07 18-21-34_1.avi")
 
     # 打开csv文件逐行写入
     row = []

@@ -3,10 +3,10 @@ import matplotlib.pyplot as plt
 
 size = 4
 x = np.arange(size)
-video_file_cloud = (156.51, 185.21, 211.59, 241.59)
-video_file_cloud_o = (180.76, 203.15, 236.175, 265.44)
-video_file_edge = (126.49, 145.71, 171.44, 195.76)
-video_file_edge_o = (144.55, 160.52, 188.94, 212.23)
+video_file_cloud = (56.51, 85.21, 111.59, 141.59)
+video_file_cloud_o = (80.76, 103.15, 136.175, 165.44)
+video_file_edge = (26.49, 45.71, 71.44, 95.76)
+video_file_edge_o = (44.55, 60.52, 88.94, 112.23)
 
 
 total_width, n = 0.8, 3
