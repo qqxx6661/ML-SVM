@@ -14,7 +14,7 @@ out0 = cv2.VideoWriter('video_overlap/' + file_name + '_0.avi', fourcc, 30.0, (6
 out1 = cv2.VideoWriter('video_overlap/' + file_name + '_1.avi', fourcc, 30.0, (640, 480))
 record_status = 1
 record_total = 900
-time.sleep(10)
+time.sleep(13)
 while True:
     # 读取一帧
     status1, frame1 = cap1.read()

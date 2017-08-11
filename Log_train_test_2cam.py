@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import time
 from sklearn import linear_model
 from sklearn.preprocessing import StandardScaler
+import time
 
 def judge_accuracy_ave(predict_array, real_array):
     List_ave = []
@@ -58,6 +59,7 @@ def judge_accuracy(predict_array, real_array):
     correct_rate = correct / len(predict_array)
     return correct_rate
 
+start = time.time()
 data = []
 labels = []
 test_num = 10000
@@ -110,4 +112,6 @@ test_X_result = logreg.predict(test_X)
 print("逻辑回归预测准确率：", judge_accuracy(test_X_result, test_Y))
 print("逻辑回归预测准确率2：", judge_accuracy_ave(test_X_result, test_Y))
 
+end = time.time()
+print(end - start)
 # 91.8469%
