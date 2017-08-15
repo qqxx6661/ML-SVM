@@ -12,8 +12,8 @@ fourcc = cv2.VideoWriter_fourcc(*'DIVX')
 file_name = str(datetime.datetime.now().strftime("%Y-%m-%d %H-%M-%S"))
 out0 = cv2.VideoWriter('video_overlap/' + file_name + '_0.avi', fourcc, 30.0, (640, 480))
 out1 = cv2.VideoWriter('video_overlap/' + file_name + '_1.avi', fourcc, 30.0, (640, 480))
-record_status = 1
-record_total = 900
+record_status = 0
+record_total = 930
 time.sleep(13)
 while True:
     # 读取一帧

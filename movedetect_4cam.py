@@ -152,6 +152,7 @@ def cal_speed(cur_frame_inner, point_x_inner, point_y_inner, tracker_inner, cam_
         row.append(0)
         return point_x_inner, point_y_inner
 
+
 if __name__ == "__main__":
 
     # 全局变量
@@ -168,10 +169,10 @@ if __name__ == "__main__":
     tracker3 = cv2.Tracker_create("KCF")
 
     # 视频输入：文件或摄像头
-    camera0 = cv2.VideoCapture("video_overlap/4cam_scene1/2017-08-08 18-07-00_0.avi")
-    camera1 = cv2.VideoCapture("video_overlap/4cam_scene1/2017-08-08 18-07-00_1.avi")
-    camera2 = cv2.VideoCapture("video_overlap/4cam_scene1/2017-08-08 18-07-01_0.avi")
-    camera3 = cv2.VideoCapture("video_overlap/4cam_scene1/2017-08-08 18-07-01_1.avi")
+    camera0 = cv2.VideoCapture("video_overlap/4cam_scene2/2017-08-10 17-42-43_0.avi")
+    camera1 = cv2.VideoCapture("video_overlap/4cam_scene2/2017-08-10 17-42-43_1.avi")
+    camera2 = cv2.VideoCapture("video_overlap/4cam_scene2/2017-08-10 17-42-45_0.avi")
+    camera3 = cv2.VideoCapture("video_overlap/4cam_scene2/2017-08-10 17-42-45_1.avi")
 
 
     # 打开csv文件逐行写入

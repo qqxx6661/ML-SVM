@@ -6,7 +6,7 @@ x = np.arange(size)
 
 #video_file_cloud_o = (80760, 103150, 136175, 165440)
 video_file_cloud_o = (4.907, 5.013, 5.134, 5.219)
-prediction_cloud = (1.58, 1.898, 2.13, 2.27)
+prediction_cloud = (1.69, 1.957, 2.52, 2.64)
 prediction_EaOT = (1.58, 1.898, 2.13, 2.27)
 video_file_edge_o = (4.649, 4.782, 4.949, 5.05)
 
