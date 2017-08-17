@@ -109,27 +109,34 @@ def cal_speed(cur_frame_inner, point_x_inner, point_y_inner, tracker_inner, cam_
         return point_x_inner, point_y_inner
 
 
-def cal_speed_face(cur_frame_inner, point_x_inner, point_y_inner, cam_id_inner):
+def cal_speed_upperbody(cur_frame_inner, point_x_inner, point_y_inner, cam_id_inner):
 
     gray = cv2.cvtColor(cur_frame_inner, cv2.COLOR_BGR2GRAY)
 
-    faces = faceCascade.detectMultiScale(
+    bodys = bodyCascade.detectMultiScale(
         gray,
-        scaleFactor=1.1,
-        minNeighbors=5,
-        minSize=(30, 30)
+        scaleFactor=1.05,  # 越小越慢，越可能检测到
+        minNeighbors=2,  # 越小越慢，越可能检测到
+        minSize=(95, 80),
+        maxSize=(150, 180),
+        # minSize=(30, 30)
+        flags=cv2.CASCADE_SCALE_IMAGE
     )
 
-    if len(faces) == 0:  # 没有人脸，速度和摄像头都为0
+    if len(bodys) == 0:  # 没有人脸，速度和摄像头都为0
+        # 一个自身判断无运动，两个速度，两个摄像头
+        row.append(0)
         row.append(0)
         row.append(0)
         row.append(0)
         row.append(0)
 
     else:
+
+        row.append(1)  # 自身判断有运动
         # 只输入第一张人脸数据
-        print('Now face number:', len(faces))
-        x, y, w, h = faces[0][0], faces[0][1], faces[0][2], faces[0][3]
+        print('Now face:', bodys)
+        x, y, w, h = bodys[0][0], bodys[0][1], bodys[0][2], bodys[0][3]
         p1 = (x, y)
         p2 = (x + w, y + h)
         cv2.rectangle(cur_frame_inner, p1, p2, (0, 255, 0), 2)
@@ -145,6 +152,7 @@ def cal_speed_face(cur_frame_inner, point_x_inner, point_y_inner, cam_id_inner):
             # print("纵轴速度为：", v_updown)
             row.append(v_leftright)
             row.append(v_updown)
+
         point_x_inner = p1[0]
         point_y_inner = p1[1]
 
@@ -182,17 +190,17 @@ if __name__ == "__main__":
 
     # 全局变量
     global_start = time.time()  # 计算总用时
-    cam_id = 0
+    time_stamp = 1  # 时间标记
     fps = 29  # 获取参数一：帧率(暂时没用)
     pre_frame0, pre_frame1 = None, None  # 获取参数一：前一帧图像（灰度），判断是否有运动物体
     entropy_last0, entropy_last1 = 0, 0  # 获取参数二：前一帧抖动数值
     point_x0, point_y0, point_x1, point_y1 = 0, 0, 0, 0  # 获取参数三：初始化运动点
-    cascPath = "Webcam-Face-Detect/haarcascade_frontalface_default.xml"
-    faceCascade = cv2.CascadeClassifier(cascPath)
+    cascPath = "Webcam-Face-Detect/haarcascade_upperbody.xml"
+    bodyCascade = cv2.CascadeClassifier(cascPath)
 
     # 视频输入：文件或摄像头
-    camera0 = cv2.VideoCapture("video_overlap/2cam_scene1/2017-08-07 18-04-27_0.avi")
-    camera1 = cv2.VideoCapture("video_overlap/2cam_scene1/2017-08-07 18-04-27_1.avi")
+    camera0 = cv2.VideoCapture("video_overlap/2cam_scene1/2017-08-07 17-54-50_0.avi")
+    camera1 = cv2.VideoCapture("video_overlap/2cam_scene1/2017-08-07 17-54-50_1.avi")
 
     # 打开csv文件逐行写入
     row = []
@@ -214,8 +222,11 @@ if __name__ == "__main__":
             cam_id = 0
 
             # 参数0：时间(暂时不加入)
-            time_now = str(datetime.datetime.now().strftime("%H%M%S%f"))
-            row.append(time_now[:-4])  # 毫秒只取两位
+            # time_now = str(datetime.datetime.now().strftime("%H%M%S%f"))
+            # row.append(time_now[:-4])  # 毫秒只取两位
+            row.append(time_stamp)
+            time_stamp += 1
+            print('------', time_stamp, '-------')
 
             # 获取参数一：开/关
             row.append('0')  # 判断有无运动，遇到有物体运动再改为1
@@ -224,11 +235,9 @@ if __name__ == "__main__":
             # 获取参数二：图像抖动
             entropy_last0 = process_rgb_delta(cur_frame0, entropy_last0)
 
-            # 获取参数三：速度
-            point_x0, point_y0 = cal_speed_face(cur_frame0, point_x0, point_y0, cam_id)
-            # 写入一行
-            # f_csv.writerow(row)
-            # row = []
+            # 获取参数三：速度和对应摄像头开关
+            point_x0, point_y0 = cal_speed_upperbody(cur_frame0, point_x0, point_y0, cam_id)
+
 
 
             cam_id = 1
@@ -240,8 +249,8 @@ if __name__ == "__main__":
             # 获取参数二：图像抖动
             entropy_last1 = process_rgb_delta(cur_frame1, entropy_last1)
 
-            # 获取参数三：速度
-            point_x1, point_y1 = cal_speed_face(cur_frame1, point_x1, point_y1, cam_id)
+            # 获取参数三：速度和对应摄像头开关
+            point_x1, point_y1 = cal_speed_upperbody(cur_frame1, point_x1, point_y1, cam_id)
             # 写入一行
             # f_csv.writerow(row)
             # row = []
@@ -253,7 +262,6 @@ if __name__ == "__main__":
             cv2.imshow('frame0', cur_frame0)
             cv2.imshow('frame1', cur_frame1)
 
-            print('---------------')
 
     # 计算总用时，释放内存
     global_end = time.time()

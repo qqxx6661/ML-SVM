@@ -2,8 +2,8 @@ import cv2
 import sys
 
 #cascPath = sys.argv[0]
-bodyCascade = cv2.CascadeClassifier('haarcascade_mcs_upperbody.xml')
-
+bodyCascade = cv2.CascadeClassifier('haarcascade_upperbody.xml')
+video_capture = cv2.VideoCapture(0)
 
 while True:
     # Capture frame-by-frame
@@ -15,8 +15,8 @@ while True:
         gray,
         scaleFactor=1.1,
         minNeighbors=5,
-        minSize=(100,200),
-        flags=cv2.cv.CV_HAAR_SCALE_IMAGE
+        minSize=(50, 50),
+        flags=cv2.CASCADE_SCALE_IMAGE
     )
 
 
