@@ -199,8 +199,8 @@ if __name__ == "__main__":
     bodyCascade = cv2.CascadeClassifier(cascPath)
 
     # 视频输入：文件或摄像头
-    camera0 = cv2.VideoCapture("video_overlap/2cam_scene1/2017-08-07 17-54-50_0.avi")
-    camera1 = cv2.VideoCapture("video_overlap/2cam_scene1/2017-08-07 17-54-50_1.avi")
+    camera0 = cv2.VideoCapture("2017-08-07 17-54-50_0.avi")
+    camera1 = cv2.VideoCapture("2017-08-07 17-54-50_1.avi")
 
     # 打开csv文件逐行写入
     row = []
@@ -256,6 +256,7 @@ if __name__ == "__main__":
             # row = []
 
             # 写入一行
+            print(type(row), row)
             f_csv.writerow(row)
             row = []
 

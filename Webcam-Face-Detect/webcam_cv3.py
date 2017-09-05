@@ -3,8 +3,8 @@ import sys
 import datetime as dt
 from time import sleep
 
-faceCascade = cv2.CascadeClassifier("haarcascade_upperbody.xml")
-video_capture = cv2.VideoCapture('2017-08-07 18-21-34_1.avi', 0)
+faceCascade = cv2.CascadeClassifier("haarcascade_mcs_upperbody.xml")
+video_capture = cv2.VideoCapture('2017-08-07 18-08-22_1.avi', 0)
 anterior = 0
 
 while True:
