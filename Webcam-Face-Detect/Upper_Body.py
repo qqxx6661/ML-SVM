@@ -3,7 +3,7 @@ import sys
 
 #cascPath = sys.argv[0]
 bodyCascade = cv2.CascadeClassifier('haarcascade_upperbody.xml')
-video_capture = cv2.VideoCapture(0)
+video_capture = cv2.VideoCapture('2017-09-23 15-53-44_1.avi')
 
 while True:
     # Capture frame-by-frame

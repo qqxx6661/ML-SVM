@@ -3,18 +3,19 @@
 import datetime
 import cv2
 import time
-cap0 = cv2.VideoCapture(0)
-cap1 = cv2.VideoCapture(1)
+cap0 = cv2.VideoCapture(1)
+cap1 = cv2.VideoCapture(0)
 # 定义解码器并创建VideoWrite对象
 # linux: XVID、X264; windows:DIVX
 # 20.0指定一秒钟的帧数
 fourcc = cv2.VideoWriter_fourcc(*'DIVX')
 file_name = str(datetime.datetime.now().strftime("%Y-%m-%d %H-%M-%S"))
-out0 = cv2.VideoWriter('video_overlap/' + file_name + '_0.avi', fourcc, 30.0, (640, 480))
-out1 = cv2.VideoWriter('video_overlap/' + file_name + '_1.avi', fourcc, 30.0, (640, 480))
-record_status = 0
-record_total = 930
-time.sleep(13)
+out0 = cv2.VideoWriter('video12.9/' + file_name + '_3.avi', fourcc, 10.0, (640, 480))
+out1 = cv2.VideoWriter('video12.9/' + file_name + '_0.avi', fourcc, 10.0, (640, 480))
+record_status = 1
+record_total = 54000
+record_interval = 3
+time.sleep(23)
 while True:
     # 读取一帧
     status1, frame1 = cap1.read()
@@ -28,14 +29,16 @@ while True:
         break
 
     if record_status == 1:
-        # frame0 = cv2.flip(frame0, 0)
-        # frame1 = cv2.flip(frame1, 0) # 翻转图像
-        out0.write(frame0)
-        out1.write(frame1)
-
-        print(record_total)
-        if record_total == 0:
-            break
+        if record_interval == 0:
+            # frame0 = cv2.flip(frame0, 0)
+            # frame1 = cv2.flip(frame1, 0) # 翻转图像
+            out0.write(frame0)
+            out1.write(frame1)
+            print(record_total)
+            if record_total == 0:
+                break
+            record_interval = 3
+        record_interval -= 1
         record_total -= 1
 
     # 显示帧
